@@ -1,13 +1,15 @@
 import logging
 import os
 from telebot import TeleBot
-from common import str2mdown
+from common import str2mdown, read_ssm_parameter
 from emoji import emojize
+import boto3
 
 from db import subscriptions
 from services import sports
 
-BOT_TOKEN = os.getenv("BOT_TOKEN", default=None)
+
+BOT_TOKEN = read_ssm_parameter("/pnotifier_bot/telegram/token")
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
