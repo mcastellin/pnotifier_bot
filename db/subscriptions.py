@@ -5,14 +5,8 @@ import os
 
 TABLE_NAME = "subscriptions"
 
-DYNAMODB_ENDPOINT_URL = os.getenv("DYNAMODB_ENDPOINT_URL", "http://localhost:4566")
-ddb = boto3.resource(
-    "dynamodb",
-    aws_access_key_id="00000",
-    aws_secret_access_key="0000",
-    endpoint_url=DYNAMODB_ENDPOINT_URL,
-    region_name="eu-west-1",
-)
+AWS_ENDPOINT_URL = os.getenv("AWS_ENDPOINT_URL", None)
+ddb = boto3.resource("dynamodb", endpoint_url=AWS_ENDPOINT_URL)
 
 
 def get_subscription(chat_id):
