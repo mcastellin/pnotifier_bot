@@ -1,0 +1,9 @@
+pipeline {
+    stages {
+        stage('Run tests') {
+            withPythonEnv('pnotifier_venv') {
+                sh "which python3"
+            }
+        }
+    }
+}
