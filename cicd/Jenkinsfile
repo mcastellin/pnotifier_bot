@@ -20,7 +20,7 @@ pipeline {
                 branch 'main'
             }
             steps {
-                sh "docker -H ssh://jenkins@192.168.1.20:22 rm -f 192.168.1.20:5000/pnotifier_bot:latest || true"
+                sh "docker -H ssh://jenkins@192.168.1.20:22 rm -f pnotifier || true"
                 sh """docker -H ssh://jenkins@192.168.1.20:22 \
                     run --name pnotifier \
                     -d \
