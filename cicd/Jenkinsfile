@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build docker image') {
             steps {
-                sh 'docker build -t pnotifier_bot:latest .'
+                sh 'docker build -t pnotifier:latest .'
             }
         }
         stage('tag and push image') {
@@ -11,8 +11,8 @@ pipeline {
                 branch 'main'
             }
             steps {
-                sh "docker tag pnotifier_bot:latest ${PRIVATE_DOCKER_REGISTRY}/pnotifier_bot:${GIT_COMMIT}"
-                sh "docker push ${PRIVATE_DOCKER_REGISTRY}/pnotifier_bot:${GIT_COMMIT}"
+                sh "docker tag pnotifier:latest ${PRIVATE_DOCKER_REGISTRY}/pnotifier:${GIT_COMMIT}"
+                sh "docker push ${PRIVATE_DOCKER_REGISTRY}/pnotifier:${GIT_COMMIT}"
             }
         }
         stage('deploy container stack') {
