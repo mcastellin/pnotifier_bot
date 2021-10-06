@@ -2,8 +2,10 @@ pipeline {
     agent any
     stages {
         stage('Run tests') {
-            withPythonEnv('pnotifier_venv') {
-                sh "which python3"
+            steps {
+                withPythonEnv('pnotifier_venv') {
+                    sh "which python3"
+                }
             }
         }
     }
