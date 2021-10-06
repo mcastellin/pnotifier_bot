@@ -8,10 +8,9 @@ services:
             LOCALSTACK_SERVICES: dynamodb
     
     pnotifier:
-        image: mcastellin/pnotifier
-        build: .
+        image: ${PRIVATE_DOCKER_REGISTRY}/pnotifier:${GIT_COMMIT}
         container_name: pnotifier
         restart: always
         environment:
-            BOT_TOKEN: ${BOT_TOKEN}
+            BOT_TOKEN: ${PNOTIFIER_BOT_TOKEN}
             DYNAMODB_ENDPOINT_URL: "http://localstack:4566"
