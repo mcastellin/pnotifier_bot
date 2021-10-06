@@ -1,11 +1,30 @@
 pipeline {
     agent any
     stages {
-        stage('Run tests') {
+        stage('build docker image') {
             steps {
-                withPythonEnv('pnotifier_venv') {
-                    sh "which python3"
-                }
+                sh 'docker build -t pnotifier_bot:latest .'
+            }
+        }
+        stage('tag and push image') {
+            when {
+                branch 'main'
+            }
+            steps {
+                sh 'docker tag pnotifier_bot:latest 192.168.1.20:5000/pnotifier_bot:latest'
+                sh 'docker push 192.168.1.20:5000/pnotifier_bot:latest'
+            }
+        }
+        stage('deploy container stack') {
+            when {
+                branch 'main'
+            }
+            steps {
+                sh "docker rm -f 192.168.1.20:5000/pnotifier_bot:latest || true"
+                sh """docker -H ssh://jenkins@192.168.1.20:22 \
+                    run --name pnotifier \
+                    -d \
+                    192.168.1.20:5000/pnotifier_bot:latest"""
             }
         }
     }
